@@ -1,0 +1,9 @@
+cookies.txt
+service_account.json
+__pycache__/
+*.pyc
+.env
+*.bin
+*.zip
+*.download
+logs/
