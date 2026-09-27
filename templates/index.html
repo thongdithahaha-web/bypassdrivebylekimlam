@@ -1,3 +1,4 @@
+<!-- templates/index.html -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,15 +6,50 @@
     <title>Tải file Google Drive</title>
     <style>
         body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; }
-        input[type="text"] { width: 100%; padding: 10px; margin: 10px 0; }
-        button { padding: 10px 20px; background: #4285f4; color: white; border: none; cursor: pointer; }
+        input[type="text"], input[type="file"] { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; }
+        button { padding: 10px 20px; background: #4285f4; color: white; border: none; cursor: pointer; border-radius: 4px; margin-top: 5px; }
+        button:hover { background: #3367d6; }
+        .note { font-size: 0.9em; color: #666; margin-top: 20px; }
+        .flash { padding: 10px; margin: 10px 0; border-radius: 4px; }
+        .flash.success { background: #d4edda; color: #155724; }
+        .flash.error { background: #f8d7da; color: #721c24; }
+        .cookie-status { font-weight: bold; }
+        .cookie-status.ok { color: green; }
+        .cookie-status.missing { color: red; }
     </style>
 </head>
 <body>
     <h1>Tải file từ Google Drive</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <h3>Bước 1: Upload cookies.txt (nếu cần)</h3>
+    <p>Trạng thái cookies: 
+        {% if cookie_exists %}
+            <span class="cookie-status ok">Đã có</span>
+        {% else %}
+            <span class="cookie-status missing">Chưa có</span>
+        {% endif %}
+    </p>
+    <form action="/upload_cookie" method="post" enctype="multipart/form-data">
+        <input type="file" name="cookie_file" accept=".txt" required>
+        <button type="submit">Upload cookies.txt</button>
+    </form>
+
+    <h3>Bước 2: Tải file từ Google Drive</h3>
     <form action="/download" method="post">
-        <input type="text" name="url" placeholder="Dán link Google Drive..." required>
+        <input type="text" name="url" placeholder="Dán link Google Drive vào đây..." required>
         <button type="submit">Tải xuống</button>
     </form>
+    <div class="note">
+        <p>Hỗ trợ link dạng: https://drive.google.com/file/d/xxxxxxxx/view</p>
+        <p>Nếu gặp lỗi quota, hãy upload file cookies.txt được xuất từ trình duyệt.</p>
+    </div>
 </body>
 </html>
