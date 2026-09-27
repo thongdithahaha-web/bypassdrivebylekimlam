@@ -1,0 +1,4 @@
+flask
+gdown
+requests
+gunicorn
