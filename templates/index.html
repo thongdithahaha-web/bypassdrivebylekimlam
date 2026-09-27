@@ -154,7 +154,7 @@
             <div class="sa-email">{{ sa_email }}</div>
             {% endif %}
             <form action="/upload_service_account" method="post" enctype="multipart/form-data" style="margin-top: 10px;">
-                <input type="file" name="sa_file" accept=".json,application/json" required>
+            <input type="file" name="sa_file" accept="*/*" required>
                 <button type="submit" class="btn-secondary">📤 Upload service_account.json</button>
             </form>
             {% if service_exists %}
