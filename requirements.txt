@@ -1,4 +1,9 @@
 flask
-gdown
+gdown>=5.1.0
 requests
 gunicorn
+werkzeug
+google-api-python-client
+google-auth
+google-auth-httplib2
+google-auth-oauthlib
